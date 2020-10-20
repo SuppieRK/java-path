@@ -3,7 +3,7 @@ package com.github.suppie.javapath.exceptions;
 /**
  * Describes any exception occurred during path evaluation
  */
-public class PathException extends Exception {
+public class PathNotFoundException extends Exception {
     /**
      * Constructs a new exception with the specified detail message.  The
      * cause is not initialized, and may subsequently be initialized by
@@ -12,7 +12,7 @@ public class PathException extends Exception {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public PathException(String message) {
+    public PathNotFoundException(String message) {
         super(message);
     }
 
@@ -30,7 +30,7 @@ public class PathException extends Exception {
      *                unknown.)
      * @since 1.4
      */
-    public PathException(String message, Throwable cause) {
+    public PathNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 }

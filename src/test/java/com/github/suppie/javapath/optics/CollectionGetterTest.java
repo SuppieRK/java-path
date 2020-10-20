@@ -2,7 +2,7 @@ package com.github.suppie.javapath.optics;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.suppie.javapath.exceptions.PathException;
+import com.github.suppie.javapath.exceptions.PathNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -75,10 +75,10 @@ class CollectionGetterTest {
         ProtectedMapLikeObject protectedMapLikeObject = new ProtectedMapLikeObject();
         PrivateMapLikeObject privateMapLikeObject = new PrivateMapLikeObject();
 
-        assertThrows(PathException.class, () -> collectionGetter.apply(throwingMapLikeObject), "Map-like object throwing exception on invocation must fail");
-        assertThrows(PathException.class, () -> collectionGetter.apply(packageDefaultMapLikeObject), "Map-like object with package default method must fail");
-        assertThrows(PathException.class, () -> collectionGetter.apply(protectedMapLikeObject), "Map-like object with protected method must fail");
-        assertThrows(PathException.class, () -> collectionGetter.apply(privateMapLikeObject), "Map-like object with private method must fail");
+        assertThrows(PathNotFoundException.class, () -> collectionGetter.apply(throwingMapLikeObject), "Map-like object throwing exception on invocation must fail");
+        assertThrows(PathNotFoundException.class, () -> collectionGetter.apply(packageDefaultMapLikeObject), "Map-like object with package default method must fail");
+        assertThrows(PathNotFoundException.class, () -> collectionGetter.apply(protectedMapLikeObject), "Map-like object with protected method must fail");
+        assertThrows(PathNotFoundException.class, () -> collectionGetter.apply(privateMapLikeObject), "Map-like object with private method must fail");
     }
 
     public static class ThrowingMapLikeObject {

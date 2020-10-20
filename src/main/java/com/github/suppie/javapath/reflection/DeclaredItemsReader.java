@@ -1,6 +1,6 @@
 package com.github.suppie.javapath.reflection;
 
-import com.github.suppie.javapath.exceptions.PathException;
+import com.github.suppie.javapath.exceptions.PathNotFoundException;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -25,21 +25,21 @@ public interface DeclaredItemsReader {
      * @param target    that presumably allows to access the field
      * @param fieldName to access
      * @return field value
-     * @throws PathException wrapping either {@link NoSuchFieldException} or
+     * @throws PathNotFoundException wrapping either {@link NoSuchFieldException} or
      *                       {@link IllegalAccessException}. The reason for wrapping is
      *                       the fact that all operations performed against specific target
      *                       and both these exceptions do not lead to retrieving desired value.
      */
-    default Object readField(final Object target, final String fieldName) throws PathException {
+    default Object readField(final Object target, final String fieldName) throws PathNotFoundException {
         try {
             return target.getClass().getDeclaredField(fieldName).get(target);
         } catch (NoSuchFieldException nsfe) {
-            throw new PathException(String.format(
+            throw new PathNotFoundException(String.format(
                     NO_SUCH_FIELD,
                     fieldName, target.getClass().getName()
             ), nsfe);
         } catch (IllegalAccessException iae) {
-            throw new PathException(String.format(
+            throw new PathNotFoundException(String.format(
                     CANNOT_ACCESS_FIELD,
                     fieldName, target.getClass().getName()
             ), iae);
@@ -52,26 +52,26 @@ public interface DeclaredItemsReader {
      * @param target     that presumably has this method
      * @param methodName to lookup and invoke
      * @return invocation result for given target
-     * @throws PathException wrapping either {@link NoSuchMethodException} or
+     * @throws PathNotFoundException wrapping either {@link NoSuchMethodException} or
      *                       {@link IllegalAccessException}. The reason for wrapping is
      *                       the fact that all operations performed against specific target
      *                       and both these exceptions do not lead to retrieving desired value.
      */
-    default Object readMethod(final Object target, final String methodName) throws PathException {
+    default Object readMethod(final Object target, final String methodName) throws PathNotFoundException {
         try {
             return target.getClass().getDeclaredMethod(methodName).invoke(target);
         } catch (NoSuchMethodException nsme) {
-            throw new PathException(String.format(
+            throw new PathNotFoundException(String.format(
                     NO_SUCH_METHOD,
                     methodName, target.getClass().getName()
             ), nsme);
         } catch (IllegalAccessException iae) {
-            throw new PathException(String.format(
+            throw new PathNotFoundException(String.format(
                     CANNOT_ACCESS_METHOD,
                     methodName, target.getClass().getName()
             ), iae);
         } catch (InvocationTargetException ite) {
-            throw new PathException(String.format(
+            throw new PathNotFoundException(String.format(
                     UNDERLYING_METHOD_EXCEPTION,
                     methodName, target.getClass().getName()
             ), ite.getTargetException());
@@ -84,25 +84,25 @@ public interface DeclaredItemsReader {
      * @param target     that presumably has this method
      * @param methodName to lookup and invoke
      * @return invocation result for given target
-     * @throws PathException wrapping either {@link NoSuchMethodException} or
+     * @throws PathNotFoundException wrapping either {@link NoSuchMethodException} or
      *                       {@link IllegalAccessException}. The reason for wrapping is
      *                       the fact that all operations performed against specific target
      *                       and both these exceptions do not lead to retrieving desired value.
      */
-    default <T> Object readMethodWithSingleParameter(final Object target, final String methodName, final Class<T> argumentType, final T argumentValue) throws PathException {
+    default <T> Object readMethodWithSingleParameter(final Object target, final String methodName, final Class<T> argumentType, final T argumentValue) throws PathNotFoundException {
         try {
             return target.getClass().getDeclaredMethod(methodName, argumentType).invoke(target, argumentValue);
         } catch (NoSuchMethodException nsme) {
-            throw new PathException(String.format(
+            throw new PathNotFoundException(String.format(
                     NO_SUCH_METHOD_WITH_SINGLE_PARAMETER,
                     methodName, target.getClass().getName(), argumentType.getName(), argumentValue
             ), nsme);
         } catch (IllegalAccessException iae) {
-            throw new PathException(String.format(
+            throw new PathNotFoundException(String.format(
                     CANNOT_ACCESS_METHOD_WITH_SINGLE_PARAMETER,
                     methodName, target.getClass().getName(), argumentType.getName(), argumentValue), iae);
         } catch (InvocationTargetException ite) {
-            throw new PathException(String.format(
+            throw new PathNotFoundException(String.format(
                     UNDERLYING_METHOD_WITH_SINGLE_PARAMETER_EXCEPTION,
                     methodName, target.getClass().getName(), argumentType.getName(), argumentValue
             ), ite.getTargetException());
