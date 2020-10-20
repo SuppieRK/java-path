@@ -12,7 +12,7 @@ class FieldGetterTest {
     private static final String FIELD_VALUE = "fieldValue";
     private static final boolean BOOLEAN_FIELD_VALUE = true;
 
-    private final FieldGetter fieldGetter = new FieldGetter(null, FIELD_NAME);
+    private final FieldGetter fieldGetter = new FieldGetter(FIELD_NAME);
 
     @Test
     void testFieldGetter_correctScenarios() {

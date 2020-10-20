@@ -12,11 +12,9 @@ import java.util.function.UnaryOperator;
  * Use reflection only, meta factory won't cut it here
  */
 public abstract class AbstractGetter implements UnaryOperator<Object>, DeclaredItemsReader {
-    protected final Object root;
     protected final String fieldName;
 
-    protected AbstractGetter(Object root, String fieldName) {
-        this.root = root;
+    protected AbstractGetter(String fieldName) {
         this.fieldName = fieldName;
     }
 }

@@ -10,8 +10,8 @@ import java.lang.reflect.Array;
 public class CollectionGetter extends AbstractGetter {
     private static final String COLLECTION_METHOD_NAME = "get";
 
-    public CollectionGetter(Object root, String fieldName) {
-        super(root, fieldName);
+    public CollectionGetter(String fieldName) {
+        super(fieldName);
     }
 
     /**

@@ -11,8 +11,8 @@ public class FieldGetter extends AbstractGetter {
     private static final String IS_PREFIX = "is";
     private static final String GET_PREFIX = "get";
 
-    public FieldGetter(Object root, String fieldName) {
-        super(root, fieldName);
+    public FieldGetter(String fieldName) {
+        super(fieldName);
     }
 
     /**

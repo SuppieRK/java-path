@@ -36,7 +36,7 @@ class CollectionGetterTest {
 
     @Test
     void testCollectionGetter_forArrays() {
-        CollectionGetter collectionGetter = new CollectionGetter(null, "0");
+        CollectionGetter collectionGetter = new CollectionGetter("0");
 
         assertEquals(
                 VALUE,
@@ -52,7 +52,7 @@ class CollectionGetterTest {
 
     @Test
     void testCollectionGetter_forMaps() {
-        CollectionGetter collectionGetter = new CollectionGetter(null, VALUE);
+        CollectionGetter collectionGetter = new CollectionGetter(VALUE);
 
         assertEquals(
                 VALUE,
@@ -68,7 +68,7 @@ class CollectionGetterTest {
 
     @Test
     void testCollectionGetter_incorrectMapLikeObjects() {
-        CollectionGetter collectionGetter = new CollectionGetter(null, VALUE);
+        CollectionGetter collectionGetter = new CollectionGetter(VALUE);
 
         ThrowingMapLikeObject throwingMapLikeObject = new ThrowingMapLikeObject();
         PackageDefaultMapLikeObject packageDefaultMapLikeObject = new PackageDefaultMapLikeObject();
