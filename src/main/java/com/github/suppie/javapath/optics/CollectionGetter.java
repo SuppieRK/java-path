@@ -1,13 +1,16 @@
 package com.github.suppie.javapath.optics;
 
 import com.github.suppie.java.util.Try;
+import com.github.suppie.javapath.optics.contracts.DefiniteGetter;
 
 import java.lang.reflect.Array;
+
+import static com.github.suppie.javapath.reflection.DeclaredItemsReader.readMethodWithSingleParameter;
 
 /**
  * Provides focus on array elements
  */
-public class CollectionGetter extends AbstractGetter {
+public class CollectionGetter extends DefiniteGetter {
     private static final String COLLECTION_METHOD_NAME = "get";
 
     public CollectionGetter(String fieldName) {

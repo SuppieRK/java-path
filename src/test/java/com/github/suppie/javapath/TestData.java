@@ -1,15 +1,27 @@
 package com.github.suppie.javapath;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
+
+import java.util.List;
+
 public final class TestData {
     // The authors of all books
+    // getStore().getBook().forEach(it -> it.getAuthor())
     public static final String AUTHORS_OF_ALL_BOOKS = "$.store.book[*].author";
     // All authors
+    // deepScan().forEach(it -> it.getAuthor()).collectIfNotNull()
     public static final String ALL_AUTHORS = "$..author";
     // All things, both books and bicycles
+    // getStore()
     public static final String ALL_THINGS = "$.store.*";
     // The price of everything
+    // getStore().forEach(it1 -> it1.deepScan().forEach(it2 -> it2.getPrice())).collectIfNotNull()
     public static final String PRICES = "$.store..price";
     // The third book
+    // deepScan().forEach()
     public static final String THIRD_BOOK = "$..book[2]";
     // The second to last book
     public static final String SECOND_TO_LAST_BOOK = "$..book[-2]";
@@ -75,7 +87,86 @@ public final class TestData {
             "  \"expensive\": 10\n" +
             "}";
 
+    public static final JsonNode JSON_OBJECT;
+    public static final Warehouse POJO_OBJECT;
+    public static final WarehouseArray POJO_OBJECT_WITH_ARRAY;
+
+    static {
+        ObjectMapper MAPPER = new ObjectMapper();
+
+        JsonNode JSON_OBJECT_TMP;
+        try {
+            JSON_OBJECT_TMP = MAPPER.readTree(JSON);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            JSON_OBJECT_TMP = null;
+        }
+        JSON_OBJECT = JSON_OBJECT_TMP;
+
+        Warehouse POJO_OBJECT_TMP;
+        try {
+            POJO_OBJECT_TMP = MAPPER.readValue(JSON, Warehouse.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            POJO_OBJECT_TMP = null;
+        }
+        POJO_OBJECT = POJO_OBJECT_TMP;
+
+        WarehouseArray POJO_OBJECT_WITH_ARRAY_TMP;
+        if (POJO_OBJECT_TMP == null) {
+            POJO_OBJECT_WITH_ARRAY_TMP = null;
+        } else {
+            StoreArray store = new StoreArray();
+            store.setBicycle(POJO_OBJECT.getStore().getBicycle());
+            store.setBook(POJO_OBJECT.getStore().getBook().toArray(new Book[0]));
+
+            POJO_OBJECT_WITH_ARRAY_TMP = new WarehouseArray();
+            POJO_OBJECT_WITH_ARRAY_TMP.setExpensive(POJO_OBJECT.getExpensive());
+            POJO_OBJECT_WITH_ARRAY_TMP.setStore(store);
+        }
+        POJO_OBJECT_WITH_ARRAY = POJO_OBJECT_WITH_ARRAY_TMP;
+    }
+
     private TestData() {
         // No instance
+    }
+
+    @Data
+    public static class Book {
+        private String category;
+        private String author;
+        private String title;
+        private String isbn;
+        private Double price;
+    }
+
+    @Data
+    public static class Bicycle {
+        private String color;
+        private Double price;
+    }
+
+    @Data
+    public static class Store {
+        private List<Book> book;
+        private Bicycle bicycle;
+    }
+
+    @Data
+    public static class Warehouse {
+        private Store store;
+        private Integer expensive;
+    }
+
+    @Data
+    public static class StoreArray {
+        private Book[] book;
+        private Bicycle bicycle;
+    }
+
+    @Data
+    public static class WarehouseArray {
+        private StoreArray store;
+        private Integer expensive;
     }
 }

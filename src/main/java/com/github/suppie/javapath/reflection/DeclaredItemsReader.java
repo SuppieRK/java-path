@@ -26,11 +26,11 @@ public interface DeclaredItemsReader {
      * @param fieldName to access
      * @return field value
      * @throws PathNotFoundException wrapping either {@link NoSuchFieldException} or
-     *                       {@link IllegalAccessException}. The reason for wrapping is
-     *                       the fact that all operations performed against specific target
-     *                       and both these exceptions do not lead to retrieving desired value.
+     *                               {@link IllegalAccessException}. The reason for wrapping is
+     *                               the fact that all operations performed against specific target
+     *                               and both these exceptions do not lead to retrieving desired value.
      */
-    default Object readField(final Object target, final String fieldName) throws PathNotFoundException {
+    static Object readField(final Object target, final String fieldName) throws PathNotFoundException {
         try {
             return target.getClass().getDeclaredField(fieldName).get(target);
         } catch (NoSuchFieldException nsfe) {
@@ -53,11 +53,11 @@ public interface DeclaredItemsReader {
      * @param methodName to lookup and invoke
      * @return invocation result for given target
      * @throws PathNotFoundException wrapping either {@link NoSuchMethodException} or
-     *                       {@link IllegalAccessException}. The reason for wrapping is
-     *                       the fact that all operations performed against specific target
-     *                       and both these exceptions do not lead to retrieving desired value.
+     *                               {@link IllegalAccessException}. The reason for wrapping is
+     *                               the fact that all operations performed against specific target
+     *                               and both these exceptions do not lead to retrieving desired value.
      */
-    default Object readMethod(final Object target, final String methodName) throws PathNotFoundException {
+    static Object readMethod(final Object target, final String methodName) throws PathNotFoundException {
         try {
             return target.getClass().getDeclaredMethod(methodName).invoke(target);
         } catch (NoSuchMethodException nsme) {
@@ -85,11 +85,11 @@ public interface DeclaredItemsReader {
      * @param methodName to lookup and invoke
      * @return invocation result for given target
      * @throws PathNotFoundException wrapping either {@link NoSuchMethodException} or
-     *                       {@link IllegalAccessException}. The reason for wrapping is
-     *                       the fact that all operations performed against specific target
-     *                       and both these exceptions do not lead to retrieving desired value.
+     *                               {@link IllegalAccessException}. The reason for wrapping is
+     *                               the fact that all operations performed against specific target
+     *                               and both these exceptions do not lead to retrieving desired value.
      */
-    default <T> Object readMethodWithSingleParameter(final Object target, final String methodName, final Class<T> argumentType, final T argumentValue) throws PathNotFoundException {
+    static <T> Object readMethodWithSingleParameter(final Object target, final String methodName, final Class<T> argumentType, final T argumentValue) throws PathNotFoundException {
         try {
             return target.getClass().getDeclaredMethod(methodName, argumentType).invoke(target, argumentValue);
         } catch (NoSuchMethodException nsme) {
