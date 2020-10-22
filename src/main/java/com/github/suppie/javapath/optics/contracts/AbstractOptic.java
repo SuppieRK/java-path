@@ -11,10 +11,10 @@ import java.util.function.Function;
  * <p>
  * Use reflection only, meta factory won't cut it here
  */
-public abstract class AbstractGetter<T, R> implements Function<T, R>, DeclaredItemsReader {
+public abstract class AbstractOptic<T, R> implements Function<T, R>, DeclaredItemsReader {
     protected final String fieldName;
 
-    protected AbstractGetter(String fieldName) {
+    protected AbstractOptic(String fieldName) {
         this.fieldName = fieldName;
     }
 

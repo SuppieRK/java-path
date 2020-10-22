@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class TestData {
@@ -47,6 +48,14 @@ public final class TestData {
     public static final String EVERYTHING = "$..*";
     // The number of books
     public static final String NUMBER_OF_BOOKS = "$..book.length()";
+
+    public static final String AUTHOR_FIELD = "author";
+    public static final List<String> EXPECTED_AUTHORS = new ArrayList<String>() {{
+        add("Nigel Rees");
+        add("Evelyn Waugh");
+        add("Herman Melville");
+        add("J. R. R. Tolkien");
+    }};
 
     //language=JSON
     public static final String JSON = "{\n" +

@@ -10,10 +10,10 @@ import static com.github.suppie.javapath.reflection.DeclaredItemsReader.readMeth
 /**
  * Provides focus on array elements
  */
-public class CollectionGetter extends DefiniteGetter {
+public class CollectionItemsGetter extends DefiniteGetter {
     private static final String COLLECTION_METHOD_NAME = "get";
 
-    public CollectionGetter(String fieldName) {
+    public CollectionItemsGetter(String fieldName) {
         super(fieldName);
     }
 

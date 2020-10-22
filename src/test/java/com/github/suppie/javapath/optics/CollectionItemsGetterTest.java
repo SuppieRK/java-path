@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class CollectionGetterTest {
+class CollectionItemsGetterTest {
     private static final String VALUE = "test";
 
     private static final String[] ARRAY;
@@ -36,49 +36,49 @@ class CollectionGetterTest {
 
     @Test
     void testCollectionGetter_forArrays() {
-        CollectionGetter collectionGetter = new CollectionGetter("0");
+        CollectionItemsGetter collectionItemsGetter = new CollectionItemsGetter("0");
 
         assertEquals(
                 VALUE,
-                assertDoesNotThrow(() -> collectionGetter.apply(ARRAY), "Array elements must be accessible"),
+                assertDoesNotThrow(() -> collectionItemsGetter.apply(ARRAY), "Array elements must be accessible"),
                 "Accessed value of array must be equal to the expected"
         );
         assertEquals(
                 VALUE,
-                assertDoesNotThrow(() -> collectionGetter.apply(LIST), "List elements must be accessible"),
+                assertDoesNotThrow(() -> collectionItemsGetter.apply(LIST), "List elements must be accessible"),
                 "Accessed value of list must be equal to the expected"
         );
     }
 
     @Test
     void testCollectionGetter_forMaps() {
-        CollectionGetter collectionGetter = new CollectionGetter(VALUE);
+        CollectionItemsGetter collectionItemsGetter = new CollectionItemsGetter(VALUE);
 
         assertEquals(
                 VALUE,
-                assertDoesNotThrow(() -> collectionGetter.apply(MAP), "Map elements must be accessible"),
+                assertDoesNotThrow(() -> collectionItemsGetter.apply(MAP), "Map elements must be accessible"),
                 "Accessed value of map must be equal to the expected"
         );
         assertEquals(
                 JSON_NODE.get(VALUE),
-                assertDoesNotThrow(() -> collectionGetter.apply(JSON_NODE), "Map-like object elements must be accessible"),
+                assertDoesNotThrow(() -> collectionItemsGetter.apply(JSON_NODE), "Map-like object elements must be accessible"),
                 "Accessed value of map-like object must be equal to the expected"
         );
     }
 
     @Test
     void testCollectionGetter_incorrectMapLikeObjects() {
-        CollectionGetter collectionGetter = new CollectionGetter(VALUE);
+        CollectionItemsGetter collectionItemsGetter = new CollectionItemsGetter(VALUE);
 
         ThrowingMapLikeObject throwingMapLikeObject = new ThrowingMapLikeObject();
         PackageDefaultMapLikeObject packageDefaultMapLikeObject = new PackageDefaultMapLikeObject();
         ProtectedMapLikeObject protectedMapLikeObject = new ProtectedMapLikeObject();
         PrivateMapLikeObject privateMapLikeObject = new PrivateMapLikeObject();
 
-        assertThrows(PathNotFoundException.class, () -> collectionGetter.apply(throwingMapLikeObject), "Map-like object throwing exception on invocation must fail");
-        assertThrows(PathNotFoundException.class, () -> collectionGetter.apply(packageDefaultMapLikeObject), "Map-like object with package default method must fail");
-        assertThrows(PathNotFoundException.class, () -> collectionGetter.apply(protectedMapLikeObject), "Map-like object with protected method must fail");
-        assertThrows(PathNotFoundException.class, () -> collectionGetter.apply(privateMapLikeObject), "Map-like object with private method must fail");
+        assertThrows(PathNotFoundException.class, () -> collectionItemsGetter.apply(throwingMapLikeObject), "Map-like object throwing exception on invocation must fail");
+        assertThrows(PathNotFoundException.class, () -> collectionItemsGetter.apply(packageDefaultMapLikeObject), "Map-like object with package default method must fail");
+        assertThrows(PathNotFoundException.class, () -> collectionItemsGetter.apply(protectedMapLikeObject), "Map-like object with protected method must fail");
+        assertThrows(PathNotFoundException.class, () -> collectionItemsGetter.apply(privateMapLikeObject), "Map-like object with private method must fail");
     }
 
     public static class ThrowingMapLikeObject {
