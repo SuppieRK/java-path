@@ -87,7 +87,7 @@ public class DeepScanTraversal extends IndefiniteTraversal {
      */
     @SuppressWarnings("unchecked")
     private void walkIterable(Object target, List<Object> result, Set<Object> visited) {
-        CollectionTraversal.consumeIterator(target, item -> {
+        CollectionTraversal.consumeIterator(target, true, item -> {
             if (Map.Entry.class.isAssignableFrom(item.getClass())) {
                 Map.Entry<Object, Object> entry = (Map.Entry<Object, Object>) item;
                 if (entry.getKey().equals(fieldName)) {

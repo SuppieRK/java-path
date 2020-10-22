@@ -47,14 +47,20 @@ class CollectionTraversalTest {
     }
 
     @Test
+    void testCollectionTraversal_set() {
+        List<Object> list = collectionTraversal.apply(SET).collect(Collectors.toList());
+        assertThat(list).isNotEmpty().containsExactlyInAnyOrderElementsOf(LIST);
+    }
+
+    @Test
     void testCollectionTraversal_list() {
         List<Object> list = collectionTraversal.apply(LIST).collect(Collectors.toList());
         assertThat(list).isNotEmpty().containsExactlyElementsOf(LIST);
     }
 
     @Test
-    void testCollectionTraversal_set() {
-        List<Object> list = collectionTraversal.apply(SET).collect(Collectors.toList());
+    void testCollectionTraversal_map() {
+        List<Object> list = collectionTraversal.apply(MAP).collect(Collectors.toList());
         assertThat(list).isNotEmpty().containsExactlyInAnyOrderElementsOf(LIST);
     }
 
@@ -71,26 +77,10 @@ class CollectionTraversalTest {
     @Test
     void testCollectionTraversal_mapJsonNode() {
         List<Object> list = collectionTraversal.apply(MAP_JSON_NODE).collect(Collectors.toList());
-        assertThat(list)
-                .isNotEmpty()
-                .allMatch(o -> o instanceof Map.Entry)
-                .allMatch(o -> {
-                    Map.Entry<String, Object> entry = (Map.Entry<String, Object>) o;
-                    return LIST.contains(entry.getKey()) &&
-                            entry.getValue() instanceof TextNode &&
-                            LIST.contains(((TextNode) entry.getValue()).textValue());
-                });
-    }
+        assertThat(list).isNotEmpty().allMatch(o -> o instanceof TextNode);
 
-    @Test
-    void testCollectionTraversal_map() {
-        List<Object> list = collectionTraversal.apply(MAP).collect(Collectors.toList());
-        assertThat(list)
-                .isNotEmpty()
-                .allMatch(o -> o instanceof Map.Entry)
-                .allMatch(o -> {
-                    Map.Entry<String, String> entry = (Map.Entry<String, String>) o;
-                    return LIST.contains(entry.getKey()) && LIST.contains(entry.getValue());
-                });
+        List<String> strings = list.stream().map(o -> ((TextNode) o).textValue()).collect(Collectors.toList());
+
+        assertThat(strings).isNotEmpty().containsExactlyInAnyOrderElementsOf(LIST);
     }
 }
